@@ -21,10 +21,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/v1")
-@AllArgsConstructor
 public class PersonController {
 
     private final PersonService service;
+
+    public PersonController(PersonService service) {
+        this.service = service;
+    }
 
     @PostMapping("person")
     public ResponseEntity<Person> newCostumer(@Valid @RequestBody PersonDTO personDTO) {

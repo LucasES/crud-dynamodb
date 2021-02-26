@@ -19,12 +19,16 @@ import java.util.Optional;
  * @since 25/02/21
  */
 @Service
-@AllArgsConstructor
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
 
     private ModelMapper modelMapper;
+
+    public PersonServiceImpl(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+        this.modelMapper = new ModelMapper();
+    }
 
     @Override
     public Person save(PersonDTO person) {
