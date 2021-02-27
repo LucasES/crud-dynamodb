@@ -1,14 +1,12 @@
 package com.cruddynamodb.dto;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.cruddynamodb.enums.GenderEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -25,24 +23,29 @@ public class PersonDTO implements Serializable {
 
     private static final long serialVersionUID = -3645736556301663275L;
 
+    @ApiModelProperty(notes = "The first name", example = "João Lucas", required = true, position = 0)
     @NotBlank
     @NotNull(message = "The first_name field is required!")
     @JsonProperty("first_name")
     private String firstName;
 
+    @ApiModelProperty(notes = "The last name", example = "Araújo Leite", required = true, position = 1)
     @NotBlank(message = "The last_name field can't be blank!")
     @NotNull(message = "The last_name field is required!")
-    @JsonProperty("first_name")
+    @JsonProperty("last_name")
     private String lastName;
 
-    @NotBlank(message = "The age field can't be blank!")
+    @ApiModelProperty(notes = "Current age", example = "28", required = true, position = 2)
     @NotNull(message = "The age field is required!")
     private Integer age;
 
+    @ApiModelProperty(notes = "Document number", example = "12345678900", required = true, position = 3)
     @NotBlank(message = "The document_number field can't be blank!")
     @NotNull(message = "The document_number is required!")
     @JsonProperty("document_number")
     private String documentNumber;
 
+    @ApiModelProperty(notes = "Gender", example = "male", required = true, position = 4)
+    @NotNull(message = "The gender is required!")
     private GenderEnum gender;
 }
