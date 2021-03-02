@@ -68,6 +68,23 @@ public class PersonController {
         return ResponseEntity.ok(all);
     }
 
+    @ApiOperation(value = "Returns a person by document number of people")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Returns the person"),
+            @ApiResponse(code = 500, message = "An exception was thrown"),
+    })
+    @GetMapping("person/{documentNumber}")
+    public ResponseEntity<Person> findByDocumentNumber(@ApiParam("Document number of the person to be udpated. Cannot be empty.")
+                                                           @PathVariable("documentNumber") String documentNumber) {
+        logger.info("[PersonController - findByDocumentNumber] - Starting with documentNumber: {0}", documentNumber);
+
+        Person byDocumentNumber = service.findByDocumentNumber(documentNumber);
+
+        logger.info("[PersonController - findByDocumentNumber] - Ending with person: {0}", byDocumentNumber);
+
+        return ResponseEntity.ok(byDocumentNumber);
+    }
+
     @ApiOperation(value = "Update a person by document number")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Person updated with success"),
