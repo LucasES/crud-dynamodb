@@ -26,13 +26,13 @@ public class PersonDTO implements Serializable {
     @ApiModelProperty(notes = "The first name", example = "João Lucas", required = true, position = 0)
     @NotBlank
     @NotNull(message = "The first_name field is required!")
-    @JsonProperty("first_name")
+    @JsonProperty("firstName")
     private String firstName;
 
     @ApiModelProperty(notes = "The last name", example = "Araújo Leite", required = true, position = 1)
     @NotBlank(message = "The last_name field can't be blank!")
     @NotNull(message = "The last_name field is required!")
-    @JsonProperty("last_name")
+    @JsonProperty("lastName")
     private String lastName;
 
     @ApiModelProperty(notes = "Current age", example = "28", required = true, position = 2)
@@ -42,7 +42,7 @@ public class PersonDTO implements Serializable {
     @ApiModelProperty(notes = "Document number", example = "12345678900", required = true, position = 3)
     @NotBlank(message = "The document_number field can't be blank!")
     @NotNull(message = "The document_number is required!")
-    @JsonProperty("document_number")
+    @JsonProperty("documentNumber")
     private String documentNumber;
 
     @ApiModelProperty(notes = "Gender", example = "male", required = true, position = 4)
