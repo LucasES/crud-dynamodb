@@ -109,14 +109,14 @@ public class PersonController {
             @ApiResponse(code = 500, message = "An exception was thrown"),
     })
     @DeleteMapping("person/{documentNumber}")
-    public ResponseEntity disablePerson(@ApiParam("Document number of the person to be disable. Cannot be empty.")
+    public ResponseEntity deletePersonByDocumentNumber(@ApiParam("Document number of the person to be disable. Cannot be empty.")
                                               @PathVariable("documentNumber") String documentNumber) {
 
-        logger.info("[PersonController - disablePerson] - Starting with documentNumber: {}", documentNumber);
+        logger.info("[PersonController - deletePersonByDocumentNumber] - Starting with documentNumber: {}", documentNumber);
 
         service.delete(documentNumber);
 
-        logger.info("[PersonController - disablePerson] - Ending...");
+        logger.info("[PersonController - deletePersonByDocumentNumber] - Ending...");
 
         return ResponseEntity.ok().build();
     }
