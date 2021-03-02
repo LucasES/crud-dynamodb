@@ -44,11 +44,11 @@ public class PersonController {
     @PostMapping("person")
     public ResponseEntity<Person> newPerson(@ApiParam("Person information to be created. Cannot be empty.")
                                                   @Valid @RequestBody PersonDTO personDTO) {
-        logger.info("[PersonController - newPerson] - Starting with PersonDTO: {0}", personDTO);
+        logger.info("[PersonController - newPerson] - Starting with PersonDTO: {}", personDTO);
 
         Person save = service.save(personDTO);
 
-        logger.info("[PersonController - newPerson] - Ending with Person saved: {0}", save);
+        logger.info("[PersonController - newPerson] - Ending with Person saved: {}", save);
         return new ResponseEntity(save, HttpStatus.OK);
     }
 
@@ -63,7 +63,7 @@ public class PersonController {
 
         List<Person> all = service.findAll();
 
-        logger.info("[PersonController - allPerson] - Ending with person list with size: {0}", (CollectionUtils.isEmpty(all) ? null : all.size()));
+        logger.info("[PersonController - allPerson] - Ending with person list with size: {}", (CollectionUtils.isEmpty(all) ? null : all.size()));
 
         return ResponseEntity.ok(all);
     }
@@ -76,11 +76,11 @@ public class PersonController {
     @GetMapping("person/{documentNumber}")
     public ResponseEntity<Person> findByDocumentNumber(@ApiParam("Document number of the person to be udpated. Cannot be empty.")
                                                            @PathVariable("documentNumber") String documentNumber) {
-        logger.info("[PersonController - findByDocumentNumber] - Starting with documentNumber: {0}", documentNumber);
+        logger.info("[PersonController - findByDocumentNumber] - Starting with documentNumber: {}", documentNumber);
 
         Person byDocumentNumber = service.findByDocumentNumber(documentNumber);
 
-        logger.info("[PersonController - findByDocumentNumber] - Ending with person: {0}", byDocumentNumber);
+        logger.info("[PersonController - findByDocumentNumber] - Ending with person: {}", byDocumentNumber);
 
         return ResponseEntity.ok(byDocumentNumber);
     }
@@ -94,11 +94,11 @@ public class PersonController {
     public ResponseEntity<Person> updatePerson(@ApiParam("Document number of the person to be udpated. Cannot be empty.")
                                                      @PathVariable("documentNumber") String documentNumber,
                                                  @ApiParam("Person information to be updated. Cannot be empty.") @Valid @RequestBody PersonDTO personDTO) {
-        logger.info("[PersonController - updatePerson] - Starting with documentNumber: {0} and PersonDTO: {1}", documentNumber, personDTO);
+        logger.info("[PersonController - updatePerson] - Starting with documentNumber: {} and PersonDTO: {}", documentNumber, personDTO);
 
         Person update = service.update(documentNumber, personDTO);
 
-        logger.info("[PersonController - updatePerson] - Ending with person updated: ", update);
+        logger.info("[PersonController - updatePerson] - Ending with person updated: {}", update);
 
         return ResponseEntity.ok(update);
     }
@@ -112,7 +112,7 @@ public class PersonController {
     public ResponseEntity disablePerson(@ApiParam("Document number of the person to be disable. Cannot be empty.")
                                               @PathVariable("documentNumber") String documentNumber) {
 
-        logger.info("[PersonController - disablePerson] - Starting with documentNumber: {0}", documentNumber);
+        logger.info("[PersonController - disablePerson] - Starting with documentNumber: {}", documentNumber);
 
         service.delete(documentNumber);
 

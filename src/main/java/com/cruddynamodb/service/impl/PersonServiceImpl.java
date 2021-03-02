@@ -62,6 +62,7 @@ public class PersonServiceImpl implements PersonService {
         }
 
         Person personModel = modelMapper.map(person, Person.class);
+        personModel.setId(byDocumentNumber.get().getId());
 
         return personRepository.save(personModel);
     }
