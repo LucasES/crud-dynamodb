@@ -4,11 +4,15 @@ import com.cruddynamodb.dto.PersonDTO;
 import com.cruddynamodb.model.Person;
 import com.cruddynamodb.service.PersonService;
 import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,10 +22,13 @@ import java.util.List;
  * @version 0.1
  * @since 25/02/21
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @Api(value = "Person API")
 @RestController
 @RequestMapping("/v1")
 public class PersonController {
+
+    Logger logger = LoggerFactory.getLogger(PersonController.class);
 
     private final PersonService service;
 
@@ -35,9 +42,14 @@ public class PersonController {
             @ApiResponse(code = 500, message = "An exception was thrown"),
     })
     @PostMapping("person")
-    public ResponseEntity<Person> newCostumer(@ApiParam("Person information to be created. Cannot be empty.")
+    public ResponseEntity<Person> newPerson(@ApiParam("Person information to be created. Cannot be empty.")
                                                   @Valid @RequestBody PersonDTO personDTO) {
-        return new ResponseEntity(service.save(personDTO), HttpStatus.OK);
+        logger.info("[PersonController - newPerson] - Starting with PersonDTO: {0}", personDTO);
+
+        Person save = service.save(personDTO);
+
+        logger.info("[PersonController - newPerson] - Ending with Person saved: {0}", save);
+        return new ResponseEntity(save, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Returns a list of people")
@@ -46,8 +58,14 @@ public class PersonController {
             @ApiResponse(code = 500, message = "An exception was thrown"),
     })
     @GetMapping("person")
-    public ResponseEntity<List<Person>> allCostumers() {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<Person>> allPerson() {
+        logger.info("[PersonController - allPerson] - Starting...");
+
+        List<Person> all = service.findAll();
+
+        logger.info("[PersonController - allPerson] - Ending with person list with size: {0}", (CollectionUtils.isEmpty(all) ? null : all.size()));
+
+        return ResponseEntity.ok(all);
     }
 
     @ApiOperation(value = "Update a person by document number")
@@ -56,10 +74,16 @@ public class PersonController {
             @ApiResponse(code = 500, message = "An exception was thrown"),
     })
     @PutMapping("person/{documentNumber}")
-    public ResponseEntity<Person> updateCostumer(@ApiParam("Document number of the person to be udpated. Cannot be empty.")
+    public ResponseEntity<Person> updatePerson(@ApiParam("Document number of the person to be udpated. Cannot be empty.")
                                                      @PathVariable("documentNumber") String documentNumber,
                                                  @ApiParam("Person information to be updated. Cannot be empty.") @Valid @RequestBody PersonDTO personDTO) {
-        return ResponseEntity.ok(service.update(documentNumber, personDTO));
+        logger.info("[PersonController - updatePerson] - Starting with documentNumber: {0} and PersonDTO: {1}", documentNumber, personDTO);
+
+        Person update = service.update(documentNumber, personDTO);
+
+        logger.info("[PersonController - updatePerson] - Ending with person updated: ", update);
+
+        return ResponseEntity.ok(update);
     }
 
     @ApiOperation(value = "Disable a person by document number")
@@ -68,10 +92,14 @@ public class PersonController {
             @ApiResponse(code = 500, message = "An exception was thrown"),
     })
     @DeleteMapping("person/{documentNumber}")
-    public ResponseEntity disableCostumer(@ApiParam("Id of the person to be disable. Cannot be empty.")
+    public ResponseEntity disablePerson(@ApiParam("Document number of the person to be disable. Cannot be empty.")
                                               @PathVariable("documentNumber") String documentNumber) {
 
+        logger.info("[PersonController - disablePerson] - Starting with documentNumber: {0}", documentNumber);
+
         service.delete(documentNumber);
+
+        logger.info("[PersonController - disablePerson] - Ending...");
 
         return ResponseEntity.ok().build();
     }
